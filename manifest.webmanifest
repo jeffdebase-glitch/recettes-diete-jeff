@@ -1,0 +1,9 @@
+{
+  "name": "On mange quoi aujourd’hui ?",
+  "short_name": "Recettes Jeff",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fbf8f1",
+  "theme_color": "#fbf8f1",
+  "icons": []
+}

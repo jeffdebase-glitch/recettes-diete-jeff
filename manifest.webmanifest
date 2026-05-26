@@ -2,8 +2,22 @@
   "name": "On mange quoi aujourd’hui ?",
   "short_name": "Recettes Jeff",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#fbf8f1",
   "theme_color": "#fbf8f1",
-  "icons": []
+  "icons": [
+    {
+      "src": "images/glace-cerise-griotte-creami-deluxe.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/glace-cerise-griotte-creami-deluxe.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
 }

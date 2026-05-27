@@ -1,6 +1,6 @@
 {
   "name": "On mange quoi aujourd’hui ?",
-  "short_name": "Recettes Jeff",
+  "short_name": "On mange quoi",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -8,14 +8,14 @@
   "theme_color": "#fbf8f1",
   "icons": [
     {
-      "src": "images/glace-cerise-griotte-creami-deluxe.png",
+      "src": "./apple-touch-icon.png",
       "sizes": "180x180",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "images/glace-cerise-griotte-creami-deluxe.png",
-      "sizes": "512x512",
+      "src": "./apple-touch-icon.png",
+      "sizes": "180x180",
       "type": "image/png",
       "purpose": "any maskable"
     }

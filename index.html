@@ -3,46 +3,672 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#fbf8f1">
+<meta name="theme-color" content="#fbf8f1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1a1612" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<title>On mange quoi aujourd’hui ?</title>
+<title>On mange quoi aujourd'hui ?</title>
 <style>
-:root{--bg:#fbf8f1;--card:#fffdf8;--ink:#211b16;--muted:#81766a;--line:#eadfce;--brown:#4b351d;--gold:#9b7a42;--shadow:0 18px 45px rgba(42,32,22,.10);--r:26px}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 12% 0,#fff 0,#fbf8f1 42%,#f3eadc 100%);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",Inter,Segoe UI,sans-serif;padding-bottom:96px}.app{max-width:1120px;margin:auto;padding:8px 18px 34px}.kicker,.subtitle,p{color:var(--muted)}.kicker{font-size:17px;margin:8px 0 10px}h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(42px,8vw,82px);line-height:.92;margin:10px 0 12px;letter-spacing:-.06em}h2{font-size:22px;margin:0;letter-spacing:-.03em}.subtitle{font-size:17px}.status{display:inline-flex;margin:12px 0 0;padding:7px 11px;border:1px solid var(--line);border-radius:999px;background:rgba(255,253,248,.74);font-size:12px;font-weight:800;color:var(--muted)}.search{display:flex;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:22px;padding:14px 16px;margin:18px 0 12px;box-shadow:0 8px 30px rgba(42,32,22,.06)}.search input{border:0;outline:0;background:transparent;width:100%;font-size:16px}.search button{border:0;background:transparent;cursor:pointer;color:var(--gold);font-size:22px;padding:0 2px;line-height:1;flex-shrink:0}.cats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0 24px}.cat{border:1px solid var(--line);background:rgba(255,253,248,.86);border-radius:24px;padding:18px 14px;box-shadow:0 12px 35px rgba(42,32,22,.06);cursor:pointer}.cat b{display:block;font-size:17px}.cat span{font-size:13px;color:var(--muted)}.cat.active{background:#211b16;color:#fff;border-color:#211b16}.cat.active span{color:rgba(255,255,255,.72)}.section{margin:28px 0}.section-head{margin-bottom:12px}.section p{margin:4px 0 0}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);cursor:pointer}.photo{height:170px;background:linear-gradient(135deg,#e8dcc8,#fff7e9);position:relative;overflow:hidden}.photo img{width:100%;height:100%;object-fit:cover;display:block}.ph{position:absolute;inset:0;display:grid;place-items:center;color:#9b7a42;font-weight:800;text-align:center;padding:18px}.heart{position:absolute;right:12px;top:12px;background:rgba(255,255,255,.86);border:1px solid var(--line);border-radius:999px;width:38px;height:38px;font-size:20px}.body{padding:16px}.badge{display:inline-flex;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:800;margin-bottom:10px}.dry{background:#edf3e8;color:#52623e}.ok{background:#f4ecd9;color:#765620}.pleasure{background:#fff0db;color:#8a551f}.test{background:#eee;color:#666}.title{font-size:19px;font-weight:850;letter-spacing:-.03em;margin-bottom:10px}.macros{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.macro{background:#f7f0e6;border-radius:15px;padding:10px 5px;text-align:center}.macro b{display:block;font-size:17px}.macro small{color:var(--muted);font-size:11px}.tabs{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);width:min(560px,calc(100% - 22px));background:rgba(255,253,248,.94);backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:8px;z-index:20}.tab{border:0;background:transparent;border-radius:18px;padding:13px 4px;color:#766d63;font-size:11px;font-weight:850;letter-spacing:.095em;text-transform:uppercase;white-space:nowrap}.tab.active{background:var(--brown);color:white;box-shadow:0 10px 26px rgba(75,53,29,.22)}.panel{display:none}.panel.active{display:block}.hidden{display:none!important}.detail{position:fixed;inset:0;background:rgba(31,27,22,.28);backdrop-filter:blur(8px);z-index:40;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}.detail.show{opacity:1;pointer-events:auto}.sheet{max-width:720px;width:100%;background:var(--card);border-radius:34px 34px 0 0;overflow:hidden;box-shadow:0 -12px 60px rgba(0,0,0,.2);transform:translateY(100%);transition:transform .38s cubic-bezier(.32,1,.38,1);max-height:92vh;overflow-y:auto}.detail.show .sheet{transform:translateY(0)}.sheet-handle{width:40px;height:4px;background:var(--line);border-radius:4px;margin:12px auto 4px;cursor:grab}@keyframes heartPop{0%,100%{transform:scale(1)}40%{transform:scale(1.5)}70%{transform:scale(.9)}}.heart.pop{animation:heartPop .35s ease}.voir-tout{border:0;background:transparent;color:var(--gold);font-size:14px;font-weight:800;cursor:pointer;padding:4px 0;flex-shrink:0;text-decoration:underline}.heroimg{height:310px;background:#f0e5d6;position:relative}.heroimg img{width:100%;height:100%;object-fit:cover}.close{position:absolute;right:16px;top:16px;border:0;background:rgba(255,255,255,.92);border-radius:999px;width:42px;height:42px;font-size:18px;cursor:pointer;line-height:42px;text-align:center}.sheet-body{padding:24px}.sheet h2{font-family:Georgia,"Times New Roman",serif;font-size:42px;line-height:.95;margin:8px 0 12px;letter-spacing:-.05em}.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}.box{border-top:1px solid var(--line);padding-top:16px}.cta{width:100%;border:0;border-radius:19px;background:var(--gold);color:#fff;font-weight:850;font-size:16px;padding:15px;margin-top:16px}.form{background:var(--card);border:1px solid var(--line);border-radius:30px;padding:18px;box-shadow:var(--shadow)}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.form label{font-size:13px;color:var(--muted);font-weight:800}.form input,.form select,.form textarea{width:100%;margin-top:6px;border:1px solid var(--line);border-radius:16px;background:#fff;padding:12px;font:inherit;outline:0}.form textarea{min-height:110px}.wide{grid-column:1/-1}.output{white-space:pre-wrap;background:#211b16;color:#fff;border-radius:18px;padding:14px;margin-top:14px;overflow:auto}.empty{padding:22px;border:1px dashed var(--line);border-radius:22px;color:var(--muted);background:rgba(255,255,255,.55)}li{margin:8px 0;line-height:1.45}@media(max-width:820px){.app{padding:8px 14px 24px}h1{font-size:54px}.cats{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}.photo{height:145px}.cols{grid-template-columns:1fr}}@media(max-width:520px){.grid{grid-template-columns:1fr}.photo{height:220px}.tabs{bottom:8px;width:calc(100% - 14px);padding:7px;gap:2px}.tab{font-size:9.4px;letter-spacing:.055em;padding:12px 2px}}
+
+/* === TOKENS & RESET === */
+:root {
+  --bg:#fbf8f1; --card:#fffdf8; --ink:#211b16; --muted:#81766a;
+  --line:#eadfce; --brown:#4b351d; --gold:#9b7a42;
+  --shadow:0 18px 45px rgba(42,32,22,.10); --r:26px;
+}
+* { box-sizing:border-box; }
+
+/* === DARK MODE === */
+[data-theme="dark"] {
+  --bg:#1a1612; --card:#231e19; --ink:#f0ebe2; --muted:#9e9186;
+  --line:#352d24; --brown:#c8a96e; --gold:#c8a96e;
+  --shadow:0 18px 45px rgba(0,0,0,.4);
+}
+[data-theme="dark"] body { background:radial-gradient(circle at 12% 0,#231e19 0,#1a1612 60%); }
+[data-theme="dark"] .tabs { background:rgba(26,22,18,.94); }
+[data-theme="dark"] .search { background:#231e19; }
+[data-theme="dark"] .macro { background:#2d261e; }
+[data-theme="dark"] .macro.prot-high { background:#1e2d1e; color:#7ab87a; }
+[data-theme="dark"] .form input,
+[data-theme="dark"] .form select,
+[data-theme="dark"] .form textarea { background:#2a241e; color:var(--ink); }
+[data-theme="dark"] .output { background:#0f0d0a; }
+[data-theme="dark"] .empty { background:rgba(35,30,25,.6); }
+[data-theme="dark"] .dry { background:#1e2d1a; color:#7ab87a; }
+[data-theme="dark"] .ok { background:#2d2015; color:#c8a042; }
+[data-theme="dark"] .pleasure { background:#2d1e0f; color:#c88042; }
+[data-theme="dark"] .test { background:#252020; color:#999; }
+[data-theme="dark"] #favBackup { background:rgba(35,30,25,.8); }
+[data-theme="dark"] .wizard-hint { background:#2a241e; }
+[data-theme="dark"] #restoreInput { background:#2a241e; color:var(--ink); }
+[data-theme="dark"] .skeleton-photo,
+[data-theme="dark"] .skeleton-line {
+  background:linear-gradient(90deg,#2a241e 25%,#352d24 50%,#2a241e 75%);
+  background-size:800px 100%;
+}
+
+/* === LAYOUT === */
+body {
+  margin:0;
+  background:radial-gradient(circle at 12% 0,#fff 0,#fbf8f1 42%,#f3eadc 100%);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",Inter,Segoe UI,sans-serif;
+  padding-bottom:96px;
+}
+.app { max-width:1120px; margin:auto; padding:8px 18px 34px; }
+.hidden { display:none !important; }
+
+/* === HEADER === */
+header { position:relative; }
+.kicker { font-size:14px; margin:8px 0 8px; color:var(--muted); }
+h1 {
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(26px,7vw,56px);
+  line-height:.92; margin:6px 0 8px; letter-spacing:-.06em;
+}
+h2 { font-size:22px; margin:0; letter-spacing:-.03em; }
+.subtitle { font-size:15px; color:var(--muted); }
+p { color:var(--muted); }
+.status {
+  display:none; align-items:center;
+  margin:10px 0 0; padding:7px 11px;
+  border:1px solid var(--line); border-radius:999px;
+  background:rgba(255,253,248,.74); font-size:12px; font-weight:800; color:var(--muted);
+}
+.status.visible { display:inline-flex; }
+.status.error { background:#fef2f2; border-color:#fca5a5; color:#991b1b; }
+.theme-toggle {
+  position:absolute; top:8px; right:0;
+  background:transparent; border:1px solid var(--line); border-radius:50%;
+  width:38px; height:38px; font-size:17px; cursor:pointer; color:var(--muted);
+  display:flex; align-items:center; justify-content:center; transition:background .2s;
+}
+.theme-toggle:active { background:var(--line); }
+
+/* === SEARCH === */
+.search {
+  display:flex; gap:12px; align-items:center;
+  background:#fff; border:1px solid var(--line); border-radius:22px;
+  padding:14px 16px; margin:16px 0 10px;
+  box-shadow:0 8px 30px rgba(42,32,22,.06);
+}
+.search input { border:0; outline:0; background:transparent; width:100%; font-size:16px; color:var(--ink); }
+.search button { border:0; background:transparent; cursor:pointer; color:var(--gold); font-size:22px; padding:0 2px; line-height:1; flex-shrink:0; }
+
+/* === CATEGORY PILLS === */
+.cats {
+  display:flex; gap:10px; overflow-x:auto; scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch; scrollbar-width:none;
+  padding:4px 0 10px; margin:8px 0 14px;
+}
+.cats::-webkit-scrollbar { display:none; }
+.cat {
+  flex:0 0 auto; scroll-snap-align:start;
+  border:1px solid var(--line); background:rgba(255,253,248,.86);
+  border-radius:999px; padding:10px 18px;
+  box-shadow:0 6px 20px rgba(42,32,22,.06); cursor:pointer;
+  display:flex; align-items:center; gap:6px;
+  font-size:14px; font-weight:700; white-space:nowrap;
+  transition:background .15s,color .15s,border-color .15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.cat b { font-size:14px; font-weight:700; }
+.cat span { display:none; }
+.cat.active { background:#211b16; color:#fff; border-color:#211b16; }
+
+/* === GRID & CARDS === */
+.section { margin:26px 0; }
+.section-head { margin-bottom:12px; }
+.section p { margin:4px 0 0; }
+.grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+.card {
+  background:var(--card); border:1px solid var(--line);
+  border-radius:var(--r); overflow:hidden; box-shadow:var(--shadow);
+  cursor:pointer; transition:transform .15s ease,box-shadow .15s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.card:active { transform:scale(.97); box-shadow:0 8px 20px rgba(42,32,22,.08); }
+.photo { height:170px; position:relative; overflow:hidden; }
+.photo img { width:100%; height:100%; object-fit:cover; display:block; }
+.ph { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px; text-align:center; }
+.ph-emoji { font-size:34px; margin-bottom:6px; }
+.ph-title { font-size:12px; font-weight:800; color:rgba(75,53,29,.7); line-height:1.3; }
+.heart {
+  position:absolute; right:12px; top:12px;
+  background:rgba(255,255,255,.86); border:1px solid var(--line);
+  border-radius:999px; width:38px; height:38px; font-size:20px;
+  display:flex; align-items:center; justify-content:center; cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.body { padding:16px; }
+
+/* === BADGES === */
+.badge { display:inline-flex; border-radius:999px; padding:6px 10px; font-size:12px; font-weight:800; margin-bottom:10px; }
+.dry { background:#edf3e8; color:#52623e; }
+.ok { background:#f4ecd9; color:#765620; }
+.pleasure { background:#fff0db; color:#8a551f; }
+.test { background:#eee; color:#666; }
+
+/* === CARD TITLE & MACROS === */
+.title { font-size:20px; font-weight:850; letter-spacing:-.03em; margin-bottom:10px; }
+.macros { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+.macro { background:#f0e8d8; border-radius:15px; padding:10px 5px; text-align:center; }
+.macro b { display:block; font-size:17px; font-weight:800; }
+.macro small { color:var(--muted); font-size:11px; }
+.macro.prot-high { background:#edf3e8; color:#3a5a2e; }
+
+/* === TAB BAR === */
+.tabs {
+  position:fixed; left:50%; bottom:14px; transform:translateX(-50%);
+  width:min(560px,calc(100% - 22px));
+  background:rgba(255,253,248,.94); backdrop-filter:blur(18px);
+  border:1px solid var(--line); border-radius:24px;
+  box-shadow:var(--shadow); display:grid;
+  grid-template-columns:repeat(5,1fr); gap:4px; padding:8px; z-index:20;
+}
+.tab {
+  border:0; background:transparent; border-radius:18px;
+  padding:10px 4px 8px; color:#766d63; cursor:pointer;
+  display:flex; flex-direction:column; align-items:center; gap:3px;
+  -webkit-tap-highlight-color:transparent;
+}
+.tab-icon { font-size:20px; line-height:1; transition:transform .2s cubic-bezier(.34,1.56,.64,1); }
+.tab-label { font-size:11px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; white-space:nowrap; }
+.tab.active { background:var(--brown); color:#fff; box-shadow:0 10px 26px rgba(75,53,29,.22); }
+.tab.active .tab-icon { transform:scale(1.15); }
+
+/* === PANEL TRANSITIONS === */
+.panel { display:none; }
+.panel.active { display:block; animation:panelIn .22s ease; }
+@keyframes panelIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+/* === DETAIL SHEET === */
+.detail {
+  position:fixed; inset:0; background:rgba(31,27,22,.28);
+  backdrop-filter:blur(8px); z-index:40;
+  display:flex; align-items:flex-end; justify-content:center;
+  opacity:0; pointer-events:none; transition:opacity .3s;
+}
+.detail.show { opacity:1; pointer-events:auto; }
+.sheet {
+  max-width:720px; width:100%; background:var(--card);
+  border-radius:34px 34px 0 0; overflow:hidden;
+  box-shadow:0 -12px 60px rgba(0,0,0,.2);
+  transform:translateY(100%); transition:transform .38s cubic-bezier(.32,1,.38,1);
+  max-height:92vh; overflow-y:auto;
+}
+.detail.show .sheet { transform:translateY(0); }
+.sheet-handle { width:40px; height:4px; background:var(--line); border-radius:4px; margin:12px auto 4px; cursor:grab; }
+.heroimg { height:310px; position:relative; }
+.heroimg img { width:100%; height:100%; object-fit:cover; }
+.close {
+  position:absolute; right:16px; top:16px; border:0;
+  background:rgba(255,255,255,.92); border-radius:999px;
+  width:42px; height:42px; font-size:18px; cursor:pointer; line-height:42px; text-align:center;
+}
+.sheet-body { padding:24px; }
+.sheet h2 { font-family:Georgia,"Times New Roman",serif; font-size:42px; line-height:.95; margin:8px 0 12px; letter-spacing:-.05em; }
+.cols { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.box { border-top:1px solid var(--line); padding-top:16px; }
+.cta { width:100%; border:0; border-radius:19px; background:var(--gold); color:#fff; font-weight:850; font-size:16px; padding:15px; margin-top:16px; cursor:pointer; }
+.voir-tout { border:0; background:transparent; color:var(--gold); font-size:14px; font-weight:800; cursor:pointer; padding:4px 0; flex-shrink:0; text-decoration:underline; }
+
+/* === FORM & WIZARD === */
+.form { background:var(--card); border:1px solid var(--line); border-radius:30px; padding:20px; box-shadow:var(--shadow); }
+.form-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+.form label { font-size:13px; color:var(--muted); font-weight:800; display:block; }
+.form input,.form select,.form textarea {
+  width:100%; margin-top:6px; border:1px solid var(--line);
+  border-radius:16px; background:#fff; padding:12px; font:inherit; outline:0; color:var(--ink);
+}
+.form textarea { min-height:110px; }
+.wide { grid-column:1/-1; }
+.output { white-space:pre-wrap; background:#211b16; color:#fff; border-radius:18px; padding:14px; margin-top:14px; overflow:auto; font-size:13px; word-break:break-all; }
+.empty { padding:22px; border:1px dashed var(--line); border-radius:22px; color:var(--muted); background:rgba(255,255,255,.55); text-align:center; }
+.wizard-progress { display:flex; align-items:center; margin-bottom:10px; }
+.wizard-step-dot {
+  width:28px; height:28px; border-radius:50%; border:2px solid var(--line);
+  background:var(--card); display:flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:800; color:var(--muted); flex-shrink:0;
+  transition:background .2s,border-color .2s,color .2s;
+}
+.wizard-step-dot.active { background:var(--brown); border-color:var(--brown); color:#fff; }
+.wizard-step-dot.done { background:var(--gold); border-color:var(--gold); color:#fff; }
+.wizard-step-line { flex:1; height:2px; background:var(--line); }
+.wizard-label { font-size:13px; color:var(--muted); font-weight:800; margin:8px 0 18px; }
+.wizard-page { display:none; }
+.wizard-page.active { display:block; }
+.wizard-hint { font-size:14px; color:var(--muted); background:#f7f0e6; border-radius:14px; padding:12px 14px; margin-bottom:16px; line-height:1.5; }
+.wizard-nav { display:flex; gap:10px; margin-top:20px; align-items:center; flex-wrap:wrap; }
+.wizard-back { border:1px solid var(--line); background:transparent; border-radius:16px; padding:12px 18px; font:inherit; font-weight:800; cursor:pointer; color:var(--muted); }
+.wizard-next { flex:1; background:var(--brown); color:#fff; border:0; border-radius:16px; padding:14px; font:inherit; font-weight:800; font-size:16px; cursor:pointer; }
+.wizard-skip { width:100%; border:0; background:transparent; color:var(--gold); font-size:14px; font-weight:800; cursor:pointer; text-decoration:underline; padding:4px 0; text-align:center; }
+.live-preview-wrap { margin:16px 0 4px; }
+.live-preview-label { font-size:12px; color:var(--muted); font-weight:800; text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px; }
+.live-preview-wrap .card { max-width:260px; pointer-events:none; }
+.img-preview { width:100%; max-height:180px; object-fit:cover; border-radius:14px; margin-top:8px; display:none; }
+
+/* === SKELETON === */
+@keyframes shimmer { 0%{background-position:-400px 0} 100%{background-position:400px 0} }
+.skeleton-card { background:var(--card); border:1px solid var(--line); border-radius:var(--r); overflow:hidden; }
+.skeleton-photo { height:170px; background:linear-gradient(90deg,#f0ebe1 25%,#faf6ef 50%,#f0ebe1 75%); background-size:800px 100%; animation:shimmer 1.4s infinite; }
+.skeleton-body { padding:16px; }
+.skeleton-line { height:14px; border-radius:7px; margin-bottom:10px; background:linear-gradient(90deg,#f0ebe1 25%,#faf6ef 50%,#f0ebe1 75%); background-size:800px 100%; animation:shimmer 1.4s infinite; }
+.skeleton-line.short { width:55%; }
+
+/* === ANIMATIONS === */
+@keyframes heartPop { 0%,100%{transform:scale(1)} 40%{transform:scale(1.5)} 70%{transform:scale(.9)} }
+.heart.pop { animation:heartPop .35s ease; }
+
+/* === MISC === */
+li { margin:8px 0; line-height:1.45; }
+
+/* === BREAKPOINTS === */
+@media(max-width:820px) {
+  .app{padding:8px 14px 24px} h1{font-size:clamp(24px,8vw,44px)}
+  .grid{grid-template-columns:1fr 1fr} .photo{height:145px} .cols{grid-template-columns:1fr}
+}
+@media(max-width:520px) {
+  .grid{grid-template-columns:1fr} .photo{height:220px}
+  .tabs{bottom:8px;width:calc(100% - 14px);padding:7px;gap:2px}
+  .tab-label{font-size:10px;letter-spacing:.03em} .tab-icon{font-size:18px}
+}
 </style>
 </head>
 <body>
 <div class="app">
-<main id="home" class="panel active"><header><div class="kicker">Carnet de recettes de Jeff</div><h1>On mange quoi<br>aujourd’hui ?</h1><div class="subtitle">Glaces Creami, recettes salées et desserts validés.</div><div class="status" id="dataStatus">Base Google Sheets en cours de chargement</div><label class="search"><input id="q" placeholder="Rechercher une recette, un ingrédient..."><button type="button" id="searchBtn">⌕</button></label></header><div class="cats"><div class="cat" data-filter="Glaces Creami"><b>🍨 Glaces Creami</b><span>pots Deluxe, sorbets, salées</span></div><div class="cat" data-filter="Recettes salées"><b>🍗 Recettes salées</b><span>air fryer, repas, accompagnements</span></div><div class="cat" data-filter="Desserts"><b>🍮 Desserts</b><span>flans, granola, Nutella maison</span></div></div><section class="section curated"><div class="section-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px"><div><h2>Mes Creami</h2><p>Les recettes à retrouver vite.</p></div><button class="voir-tout" data-go="creami">Voir tout</button></div><div class="grid" id="creamiGrid"></div></section><section class="section curated"><div class="section-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px"><div><h2>Recettes validées</h2><p>Celles qui peuvent revenir sans stress.</p></div><button class="voir-tout" data-go="recipes">Voir tout</button></div><div class="grid" id="validGrid"></div></section><section class="section curated"><div class="section-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px"><div><h2>Plaisirs contrôlés</h2><p>Gourmand, mais cadré.</p></div><button class="voir-tout" data-go="recipes">Voir tout</button></div><div class="grid" id="pleasureGrid"></div></section><section class="section" id="resultsSection"><div class="section-head"><h2 id="resultsTitle">Toutes les recettes</h2><p id="count"></p></div><div class="grid" id="allGrid"></div></section></main>
-<main id="creami" class="panel"><section class="section"><h2>Glaces Creami</h2><p>Tout ton univers Creami.</p><div class="grid" id="creamiPage"></div></section></main><main id="recipes" class="panel"><section class="section"><h2>Recettes salées & desserts</h2><p>Les recettes hors Creami.</p><div class="grid" id="recipesPage"></div></section></main><main id="fav" class="panel"><section class="section"><h2>Favoris</h2><p>Tes recettes gardées sous la main.</p><div class="grid" id="favGrid"></div><div id="favBackup" style="margin-top:20px;padding:16px;border:1px solid var(--line);border-radius:20px;background:rgba(255,253,248,.8)"><p style="margin:0 0 12px;font-weight:800;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Sauvegarde des favoris</p><p style="margin:0 0 12px;font-size:13px;color:var(--muted)">Copie ce code dans tes Notes. Si tu perds tes favoris, colle-le pour les restaurer.</p><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><button onclick="exportFav()" class="cta" style="width:auto;padding:10px 16px;font-size:14px">📋 Copier le code</button><input id="restoreInput" placeholder="Coller un code ici pour restaurer..." style="flex:1;min-width:160px;border:1px solid var(--line);border-radius:14px;padding:10px 14px;font:inherit;outline:0;background:#fff"><button onclick="importFav()" class="cta" style="width:auto;padding:10px 16px;font-size:14px">Restaurer</button></div></div></section></main><main id="add" class="panel"><section class="section"><h2>Ajouter une recette</h2><p>Remplis, génère une ligne, puis colle-la dans ton Google Sheets.</p><div class="form"><div class="form-grid"><label>Titre<input id="fTitle" placeholder="Flan caséine vanille"></label><label>Catégorie<select id="fCat"><option>Glaces Creami</option><option>Recettes salées</option><option>Desserts</option></select></label><label>Section<select id="fSec"><option>Mes Creami</option><option>Recettes validées</option><option>Plaisirs contrôlés</option></select></label><label>Statut<select id="fStatus"><option>Compatible sèche</option><option>Validée Jeff</option><option>Plaisir contrôlé</option><option>À tester</option></select></label><label>Kcal<input id="fKcal" type="number"></label><label>Protéines<input id="fProt" type="number"></label><label>Glucides<input id="fCarb" type="number"></label><label>Lipides<input id="fFat" type="number"></label><label class="wide">Image<input id="fImg" placeholder="images/flan-caseine-vanille.jpg"></label><label class="wide">Ingrédients<textarea id="fIngr" placeholder="Un ingrédient par ligne"></textarea></label><label class="wide">Préparation<textarea id="fSteps" placeholder="Une étape par ligne"></textarea></label><label class="wide">Note<textarea id="fNote" placeholder="Avis diète, texture, variantes..."></textarea></label></div><button class="cta" id="gen">Générer la ligne Google Sheets</button><div id="out" class="output" hidden></div></div></section></main></div>
-<nav class="tabs"><button class="tab active" data-go="home">Accueil</button><button class="tab" data-go="creami">Creami</button><button class="tab" data-go="recipes">Recettes</button><button class="tab" data-go="fav">Favoris</button><button class="tab" data-go="add">Ajouter</button></nav><div class="detail" id="detail"></div>
+
+<main id="home" class="panel active">
+  <header>
+    <div class="kicker">Carnet de recettes de Jeff</div>
+    <h1>On mange quoi<br>aujourd'hui&nbsp;?</h1>
+    <div class="subtitle">Glaces Creami, recettes salées et desserts validés.</div>
+    <div class="status" id="dataStatus"></div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Basculer le thème">🌙</button>
+  </header>
+  <label class="search">
+    <input id="q" placeholder="Rechercher une recette, un ingrédient…">
+    <button type="button" id="searchBtn">⌕</button>
+  </label>
+  <div class="cats">
+    <div class="cat" data-filter="Glaces Creami"><b>🍨 Glaces Creami</b></div>
+    <div class="cat" data-filter="Recettes salées"><b>🍗 Recettes salées</b></div>
+    <div class="cat" data-filter="Desserts"><b>🍮 Desserts</b></div>
+  </div>
+  <section class="section curated">
+    <div class="section-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+      <div><h2>Mes Creami</h2><p>Les recettes à retrouver vite.</p></div>
+      <button class="voir-tout" data-go="creami">Voir tout</button>
+    </div>
+    <div class="grid" id="creamiGrid"></div>
+  </section>
+  <section class="section curated">
+    <div class="section-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+      <div><h2>Recettes validées</h2><p>Celles qui peuvent revenir sans stress.</p></div>
+      <button class="voir-tout" data-go="recipes">Voir tout</button>
+    </div>
+    <div class="grid" id="validGrid"></div>
+  </section>
+  <section class="section curated">
+    <div class="section-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+      <div><h2>Plaisirs contrôlés</h2><p>Gourmand, mais cadré.</p></div>
+      <button class="voir-tout" data-go="recipes">Voir tout</button>
+    </div>
+    <div class="grid" id="pleasureGrid"></div>
+  </section>
+  <section class="section" id="resultsSection">
+    <div class="section-head">
+      <h2 id="resultsTitle">Toutes les recettes</h2>
+      <p id="count"></p>
+    </div>
+    <div class="grid" id="allGrid"></div>
+  </section>
+</main>
+
+<main id="creami" class="panel">
+  <section class="section">
+    <h2>Glaces Creami</h2><p>Tout ton univers Creami.</p>
+    <div class="grid" id="creamiPage"></div>
+  </section>
+</main>
+
+<main id="recipes" class="panel">
+  <section class="section">
+    <h2>Recettes salées &amp; desserts</h2><p>Les recettes hors Creami.</p>
+    <div class="grid" id="recipesPage"></div>
+  </section>
+</main>
+
+<main id="fav" class="panel">
+  <section class="section">
+    <h2>Favoris</h2><p>Tes recettes gardées sous la main.</p>
+    <div class="grid" id="favGrid"></div>
+    <div id="favBackup" style="margin-top:20px;padding:16px;border:1px solid var(--line);border-radius:20px;background:rgba(255,253,248,.8)">
+      <p style="margin:0 0 12px;font-weight:800;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Sauvegarde des favoris</p>
+      <p style="margin:0 0 12px;font-size:13px;color:var(--muted)">Copie ce code dans tes Notes. Si tu perds tes favoris, colle-le pour les restaurer.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <button onclick="exportFav()" class="cta" style="width:auto;padding:10px 16px;font-size:14px">📋 Copier le code</button>
+        <input id="restoreInput" placeholder="Coller un code ici pour restaurer…" style="flex:1;min-width:160px;border:1px solid var(--line);border-radius:14px;padding:10px 14px;font:inherit;outline:0;background:#fff;color:var(--ink)">
+        <button onclick="importFav()" class="cta" style="width:auto;padding:10px 16px;font-size:14px">Restaurer</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<main id="add" class="panel">
+  <section class="section">
+    <h2>Ajouter une recette</h2>
+    <p>Remplis les étapes, génère la ligne, puis colle-la dans ton Google Sheets.</p>
+    <div class="form">
+      <div class="wizard-progress">
+        <div class="wizard-step-dot active" id="wDot0">1</div>
+        <div class="wizard-step-line"></div>
+        <div class="wizard-step-dot" id="wDot1">2</div>
+        <div class="wizard-step-line"></div>
+        <div class="wizard-step-dot" id="wDot2">3</div>
+      </div>
+      <div class="wizard-label">Étape <span id="stepNum">1</span> sur 3 — <span id="stepName">Informations de base</span></div>
+
+      <div class="wizard-page active" id="wStep0">
+        <div class="form-grid">
+          <label class="wide">Titre de la recette
+            <input id="fTitle" placeholder="Flan caséine vanille">
+          </label>
+          <label>Catégorie
+            <select id="fCat">
+              <option>Glaces Creami</option>
+              <option>Recettes salées</option>
+              <option>Desserts</option>
+            </select>
+          </label>
+          <label>Section
+            <select id="fSec">
+              <option>Mes Creami</option>
+              <option>Recettes validées</option>
+              <option>Plaisirs contrôlés</option>
+            </select>
+          </label>
+          <label class="wide">Statut
+            <select id="fStatus">
+              <option>Compatible sèche</option>
+              <option>Validée Jeff</option>
+              <option>Plaisir contrôlé</option>
+              <option>À tester</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="wizard-page" id="wStep1">
+        <div class="wizard-hint">📸 Optionnel — tu peux passer cette étape si tu n'as pas encore la photo ou les valeurs nutritionnelles.</div>
+        <div class="form-grid">
+          <label class="wide">Photo de la recette
+            <input type="file" id="fImgFile" accept="image/*" style="padding:8px;cursor:pointer">
+            <img class="img-preview" id="fImgPreview" alt="Aperçu photo">
+            <input id="fImg" placeholder="images/nom-de-la-recette.jpg" style="margin-top:8px">
+          </label>
+          <label>Kcal <input id="fKcal" type="number" placeholder="ex: 380"></label>
+          <label>Protéines g <input id="fProt" type="number" placeholder="ex: 42"></label>
+          <label>Glucides g <input id="fCarb" type="number" placeholder="ex: 30"></label>
+          <label>Lipides g <input id="fFat" type="number" placeholder="ex: 5"></label>
+        </div>
+        <div class="live-preview-wrap">
+          <div class="live-preview-label">Aperçu de la carte</div>
+          <div id="livePreview"></div>
+        </div>
+      </div>
+
+      <div class="wizard-page" id="wStep2">
+        <div class="form-grid">
+          <label class="wide">Ingrédients
+            <textarea id="fIngr" placeholder="Un ingrédient par ligne&#10;ex: 450 ml lait écrémé&#10;ex: 48 g whey chocolat"></textarea>
+          </label>
+          <label class="wide">Préparation
+            <textarea id="fSteps" placeholder="Une étape par ligne&#10;ex: Mixer tous les ingrédients 45 s.&#10;ex: Congeler 16 à 24 h à plat."></textarea>
+          </label>
+          <label class="wide">Note / Avis diète
+            <textarea id="fNote" placeholder="Texture, variantes, avis diète… (optionnel)" style="min-height:70px"></textarea>
+          </label>
+        </div>
+        <button class="cta" id="gen">Générer la ligne Google Sheets</button>
+        <div id="out" class="output" hidden></div>
+        <p style="font-size:13px;margin-top:10px">Copie la ligne et colle-la dans Google Sheets. Pense à ajouter l'image dans le dossier <code>images/</code> du repo.</p>
+      </div>
+
+      <div class="wizard-nav">
+        <button class="wizard-back" id="wBack" hidden>← Précédent</button>
+        <button class="wizard-next" id="wNext">Suivant →</button>
+        <button class="wizard-skip" id="wSkip" hidden>Passer l'image &amp; les macros</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+</div>
+
+<nav class="tabs">
+  <button class="tab active" data-go="home"><span class="tab-icon">🏠</span><span class="tab-label">Accueil</span></button>
+  <button class="tab" data-go="creami"><span class="tab-icon">🍨</span><span class="tab-label">Creami</span></button>
+  <button class="tab" data-go="recipes"><span class="tab-icon">🍽</span><span class="tab-label">Recettes</span></button>
+  <button class="tab" data-go="fav"><span class="tab-icon">♥</span><span class="tab-label">Favoris</span></button>
+  <button class="tab" data-go="add"><span class="tab-icon">➕</span><span class="tab-label">Ajouter</span></button>
+</nav>
+
+<div class="detail" id="detail"></div>
+
 <script>
 const SHEET_CSV_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vT9IWLldreAG7PdobXd532UBQhh17KZbhAWnydnCCWDxgsvD3v7VG7bjO5IzEAdddsyCTssD0ezcHFz/pub?gid=983750731&single=true&output=csv';
 const fallbackRecipes=[
-{id:'creami-chocolat-noisette',title:'Creami chocolat noisette',category:'Glaces Creami',section:'Mes Creami',status:'Compatible sèche',kcal:451,protein:54,carbs:42,fat:6.3,image:'images/creami-chocolat-noisette.jpg',ingredients:['450 ml lait écrémé','48 g whey chocolat','10 g cacao sucré','15 g poudre de noisette','0,5 à 0,8 g xanthane','1 pincée de sel'],steps:['Mixer tous les ingrédients 45 à 60 secondes.','Verser dans le pot Deluxe sans dépasser MAX FILL.','Congeler 16 à 24 h à plat.','Lancer Lite Ice Cream.','Si poudreux, ajouter 10 à 20 ml de lait puis Re-Spin.'],note:'Très bon ratio plaisir/protéines.'},
-{id:'poulet-air-fryer',title:'Poulet air fryer épices',category:'Recettes salées',section:'Recettes validées',status:'Validée Jeff',kcal:null,protein:null,carbs:null,fat:null,image:'images/poulet-air-fryer.jpg',ingredients:['Blanc de poulet pesé cru','Épices','Air fryer'],steps:['Assaisonner.','Cuire au air fryer.'],note:'Base quotidienne de sèche.'},
-{id:'granola-maison',title:'Granola maison',category:'Desserts',section:'Plaisirs contrôlés',status:'Plaisir contrôlé',kcal:null,protein:null,carbs:null,fat:null,image:'images/granola-maison.jpg',ingredients:['Flocons d’avoine','Blanc d’œuf','Fruits secs à peser'],steps:['Mélanger.','Cuire.','Peser la portion finale.'],note:'Dense : portion à cadrer.'}
+  {id:'creami-chocolat-noisette',title:'Creami chocolat noisette',category:'Glaces Creami',section:'Mes Creami',status:'Compatible sèche',kcal:451,protein:54,carbs:42,fat:6.3,image:'images/creami-chocolat-noisette.jpg',ingredients:['450 ml lait écrémé','48 g whey chocolat','10 g cacao sucré','15 g poudre de noisette','0,5 à 0,8 g xanthane','1 pincée de sel'],steps:['Mixer tous les ingrédients 45 à 60 secondes.','Verser dans le pot Deluxe sans dépasser MAX FILL.','Congeler 16 à 24 h à plat.','Lancer Lite Ice Cream.','Si poudreux, ajouter 10 à 20 ml de lait puis Re-Spin.'],note:'Très bon ratio plaisir/protéines.'},
+  {id:'poulet-air-fryer',title:'Poulet air fryer épices',category:'Recettes salées',section:'Recettes validées',status:'Validée Jeff',kcal:null,protein:null,carbs:null,fat:null,image:'images/poulet-air-fryer.jpg',ingredients:['Blanc de poulet pesé cru','Épices','Air fryer'],steps:['Assaisonner.','Cuire au air fryer.'],note:'Base quotidienne de sèche.'},
+  {id:'granola-maison',title:'Granola maison',category:'Desserts',section:'Plaisirs contrôlés',status:'Plaisir contrôlé',kcal:null,protein:null,carbs:null,fat:null,image:'images/granola-maison.jpg',ingredients:['Flocons d’avoine','Blanc d’œuf','Fruits secs à peser'],steps:['Mélanger.','Cuire.','Peser la portion finale.'],note:'Dense : portion à cadrer.'}
 ];
+
 let recipes=[...fallbackRecipes];
-const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];let state={filter:'all',q:''},fav=JSON.parse(localStorage.jeffFavs||'[]');
-function fmt(v){return v==null||v===''?'—':String(v).replace('.',',')}function num(v){let s=String(v??'').trim().replace(',','.');if(!s)return null;let n=Number(s);return Number.isFinite(n)?n:null}function slug(s){return (s||'recette').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}function split(v){return String(v||'').split('||').map(x=>x.trim()).filter(Boolean)}function esc(v){return String(v||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
-function canonCat(v){let s=String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();if(s.includes('creami')||s.includes('cream'))return 'Glaces Creami';if(s.includes('sale'))return 'Recettes salées';if(s.includes('dessert'))return 'Desserts';return v||'Desserts'}
-function canonSection(v){let s=String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();if(s.includes('creami'))return 'Mes Creami';if(s.includes('plaisir'))return 'Plaisirs contrôlés';if(s.includes('valide')||s.includes('recette'))return 'Recettes validées';return v||'Recettes validées'}
-function badge(s){s=s||'À tester';let c=s.includes('sèche')?'dry':s.includes('Plaisir')?'pleasure':s.includes('Validée')?'ok':'test';return `<span class="badge ${c}">${esc(s)}</span>`}function photo(r){return `<div class="photo"><img src="${esc(r.image||'')}" onerror="this.style.display='none'"><div class="ph">${esc(r.title)}</div><button class="heart" data-heart="${esc(r.id)}">${fav.includes(r.id)?'♥':'♡'}</button></div>`}function card(r){let hm=r.kcal!=null||r.protein!=null||r.carbs!=null||r.fat!=null;return `<article class="card" data-id="${esc(r.id)}">${photo(r)}<div class="body">${badge(r.status)}<div class="title">${esc(r.title)}</div>${hm?`<div class="macros"><div class="macro"><b>${fmt(r.kcal)}</b><small>kcal</small></div><div class="macro"><b>${fmt(r.protein)}</b><small>prot</small></div><div class="macro"><b>${fmt(r.carbs)}</b><small>gluc</small></div><div class="macro"><b>${fmt(r.fat)}</b><small>lip</small></div></div>`:''}</div></article>`}
-function match(r){return (state.filter==='all'||r.category===state.filter)&&(!state.q||[r.title,...(r.ingredients||[]),r.note||''].join(' ').toLowerCase().includes(state.q.toLowerCase()))}function fill(id,list,emptyMsg){$(id).innerHTML=list.length?list.map(card).join(''):'<div class="empty">'+(emptyMsg||'Aucune recette dans cette catégorie pour le moment.')+'</div>'}function render(){let f=recipes.filter(match),cur=state.filter==='all'&&!state.q;$$('.curated').forEach(s=>s.classList.toggle('hidden',!cur));fill('#creamiGrid',recipes.filter(r=>r.section==='Mes Creami').slice(0,3));fill('#validGrid',recipes.filter(r=>r.section==='Recettes validées').slice(0,3));fill('#pleasureGrid',recipes.filter(r=>r.section==='Plaisirs contrôlés').slice(0,3));fill('#allGrid',f);fill('#creamiPage',recipes.filter(r=>r.category==='Glaces Creami'));fill('#recipesPage',recipes.filter(r=>r.category!=='Glaces Creami'));fill('#favGrid',recipes.filter(r=>fav.includes(r.id)),'Appuie sur ♥ dans une recette pour la retrouver ici 💛');$('#resultsTitle').textContent=state.filter==='all'?(state.q?'Résultats':'Toutes les recettes'):state.filter;$('#count').textContent=`${f.length} recette${f.length>1?'s':''}`;$$('.cat').forEach(x=>x.classList.toggle('active',x.dataset.filter===state.filter));bind()}
-function bind(){$$('.card').forEach(c=>c.onclick=e=>{if(e.target.dataset.heart){toggle(e.target.dataset.heart);return}openR(recipes.find(r=>r.id===c.dataset.id))});$$('[data-heart]').forEach(b=>b.onclick=e=>{e.stopPropagation();toggle(b.dataset.heart)})}function toggle(id){let added=!fav.includes(id);fav=fav.includes(id)?fav.filter(x=>x!==id):[...fav,id];localStorage.jeffFavs=JSON.stringify(fav);render();if(added){let btn=document.querySelector('[data-heart="'+id+'"]');if(btn){btn.classList.remove('pop');void btn.offsetWidth;btn.classList.add('pop')}}}function openR(r){if(!r)return;let ratio=r.kcal&&r.protein?Math.round(r.protein*4/r.kcal*100):null;let hm=r.kcal!=null||r.protein!=null||r.carbs!=null||r.fat!=null;let macroHtml=hm?'<div class="macros"><div class="macro"><b>'+fmt(r.kcal)+'</b><small>kcal</small></div><div class="macro"><b>'+fmt(r.protein)+'</b><small>prot</small></div><div class="macro"><b>'+fmt(r.carbs)+'</b><small>gluc</small></div><div class="macro"><b>'+fmt(r.fat)+'</b><small>lip</small></div>'+(ratio!=null?'<div class="macro" style="background:#edf3e8;color:#52623e"><b>'+ratio+'%</b><small>prot/cal</small></div>':'')+'</div>':'';$('#detail').innerHTML=`<div class="sheet"><div class="sheet-handle"></div><div class="heroimg"><img src="${esc(r.image||'')}" onerror="this.style.display='none'"><button class="close" onclick="detail.classList.remove('show')">✕</button></div><div class="sheet-body">${badge(r.status)}<h2>${esc(r.title)}</h2>${macroHtml}<div class="cols"><div class="box"><h3>Ingrédients</h3><ul>${(r.ingredients||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div><div class="box"><h3>Préparation</h3><ol>${(r.steps||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div></div><div class="box"><h3>Avis diète</h3><p>${esc(r.note||'')}</p></div><button class="cta" onclick="toggle('${esc(r.id)}')">${fav.includes(r.id)?'Retirer des favoris':'Ajouter aux favoris'}</button></div></div>`;$('#detail').classList.add('show')}
-function parseCSV(t){let rows=[],r=[],c='',q=false;for(let i=0;i<t.length;i++){let ch=t[i],nx=t[i+1];if(ch==='"'){if(q&&nx==='"'){c+='"';i++}else q=!q}else if(ch===','&&!q){r.push(c);c=''}else if((ch==='\n'||ch==='\r')&&!q){if(ch==='\r'&&nx==='\n')i++;r.push(c);if(r.some(x=>x.trim()))rows.push(r);r=[];c=''}else c+=ch}r.push(c);if(r.some(x=>x.trim()))rows.push(r);return rows}function objs(t){let rows=parseCSV(t);if(rows.length<2)return[];let h=rows[0].map(x=>x.trim());return rows.slice(1).map(r=>Object.fromEntries(h.map((k,i)=>[k,(r[i]||'').trim()]))) }function norm(o){let title=o.title||o.titre||o.Titre||'',id=o.id||slug(title);if(!title||!id)return null;return{id,title,category:canonCat(o.category||o.categorie),section:canonSection(o.section),status:o.status||'À tester',kcal:num(o.kcal),protein:num(o.protein||o.proteines),carbs:num(o.carbs||o.glucides),fat:num(o.fat||o.lipides),image:o.image||`images/${id}.jpg`,ingredients:split(o.ingredients||o['ingrédients']),steps:split(o.steps||o.preparation||o['préparation']),note:o.note||''}}
-async function loadSheet(){try{let res=await fetch(SHEET_CSV_URL+'&t='+Date.now(),{cache:'no-store'});if(!res.ok)throw new Error(res.status);let txt=await res.text();if(txt.trim().startsWith('<'))throw new Error('html');let imp=objs(txt).map(norm).filter(Boolean);if(imp.length){recipes=imp;$('#dataStatus').textContent=`Google Sheets connecté · ${imp.length} recette${imp.length>1?'s':''} importée${imp.length>1?'s':''}`}else $('#dataStatus').textContent='Google Sheets connecté, mais aucune recette lue'}catch(e){console.warn(e);recipes=[...fallbackRecipes];$('#dataStatus').textContent='Base locale · lien CSV non lisible'}render()}
-$$('[data-go]').forEach(b=>b.onclick=()=>{$$('.tab,.panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');$('#'+b.dataset.go).classList.add('active');scrollTo(0,0)});
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+let state={filter:'all',q:''};
+let fav=JSON.parse(localStorage.jeffFavs||'[]');
+
+const CAT_GRADIENT={
+  'Glaces Creami':'linear-gradient(135deg,#d4eaf7,#e8f4f8)',
+  'Recettes salées':'linear-gradient(135deg,#e8f0d4,#f0f4e0)',
+  'Desserts':'linear-gradient(135deg,#f5e6d4,#fdf0e8)'
+};
+const CAT_EMOJI={'Glaces Creami':'🍨','Recettes salées':'🍗','Desserts':'🍮'};
+
+/* utils */
+function fmt(v){return v==null||v===''?'—':String(v).replace('.',',')}
+function num(v){let s=String(v??'').trim().replace(',','.');if(!s)return null;let n=Number(s);return Number.isFinite(n)?n:null}
+function slug(s){return(s||'recette').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+function split(v){return String(v||'').split('||').map(x=>x.trim()).filter(Boolean)}
+function esc(v){return String(v||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function canonCat(v){let s=String(v||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').trim();if(s.includes('creami')||s.includes('cream'))return 'Glaces Creami';if(s.includes('sale'))return 'Recettes salées';if(s.includes('dessert'))return 'Desserts';return v||'Desserts'}
+function canonSection(v){let s=String(v||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').trim();if(s.includes('creami'))return 'Mes Creami';if(s.includes('plaisir'))return 'Plaisirs contrôlés';if(s.includes('valide')||s.includes('recette'))return 'Recettes validées';return v||'Recettes validées'}
+
+/* card rendering */
+function badge(s){s=s||'À tester';let c=s.includes('sèche')?'dry':s.includes('Plaisir')?'pleasure':s.includes('Validée')?'ok':'test';return`<span class="badge ${c}">${esc(s)}</span>`}
+function photo(r){
+  let bg=CAT_GRADIENT[r.category]||'linear-gradient(135deg,#e8dcc8,#fff7e9)';
+  let emoji=CAT_EMOJI[r.category]||'🍴';
+  return`<div class="photo" style="background:${bg}"><img src="${esc(r.image||'')}" onerror="this.style.display='none'"><div class="ph"><span class="ph-emoji">${emoji}</span><span class="ph-title">${esc(r.title)}</span></div><button class="heart" data-heart="${esc(r.id)}">${fav.includes(r.id)?'♥':'♡'}</button></div>`
+}
+function card(r){
+  let hm=r.kcal!=null||r.protein!=null||r.carbs!=null||r.fat!=null;
+  let protHigh=r.protein&&r.kcal&&(r.protein*4/r.kcal)>0.35;
+  let macros=hm?`<div class="macros"><div class="macro"><b>${fmt(r.kcal)}</b><small>kcal</small></div><div class="macro${protHigh?' prot-high':''}"><b>${fmt(r.protein)}</b><small>prot</small></div><div class="macro"><b>${fmt(r.carbs)}</b><small>gluc</small></div><div class="macro"><b>${fmt(r.fat)}</b><small>lip</small></div></div>`:'';
+  return`<article class="card" data-id="${esc(r.id)}">${photo(r)}<div class="body">${badge(r.status)}<div class="title">${esc(r.title)}</div>${macros}</div></article>`
+}
+
+/* skeleton */
+function skeletonCard(){return`<div class="skeleton-card"><div class="skeleton-photo"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line"></div></div></div>`}
+function renderSkeletons(id,n){$(id).innerHTML=Array(n).fill(skeletonCard()).join('')}
+
+/* render */
+function match(r){return(state.filter==='all'||r.category===state.filter)&&(!state.q||[r.title,...(r.ingredients||[]),r.note||''].join(' ').toLowerCase().includes(state.q.toLowerCase()))}
+function fill(id,list,emptyMsg){$(id).innerHTML=list.length?list.map(card).join(''):`<div class="empty">${emptyMsg||'Aucune recette dans cette catégorie pour le moment.'}</div>`}
+function render(){
+  let f=recipes.filter(match),cur=state.filter==='all'&&!state.q;
+  $$('.curated').forEach(s=>s.classList.toggle('hidden',!cur));
+  fill('#creamiGrid',recipes.filter(r=>r.section==='Mes Creami').slice(0,3));
+  fill('#validGrid',recipes.filter(r=>r.section==='Recettes validées').slice(0,3));
+  fill('#pleasureGrid',recipes.filter(r=>r.section==='Plaisirs contrôlés').slice(0,3));
+  fill('#allGrid',f);
+  fill('#creamiPage',recipes.filter(r=>r.category==='Glaces Creami'));
+  fill('#recipesPage',recipes.filter(r=>r.category!=='Glaces Creami'));
+  fill('#favGrid',recipes.filter(r=>fav.includes(r.id)),'Appuie sur ♥ dans une recette pour la retrouver ici 💛');
+  $('#resultsTitle').textContent=state.filter==='all'?(state.q?'Résultats':'Toutes les recettes'):state.filter;
+  $('#count').textContent=`${f.length} recette${f.length>1?'s':''}`;
+  $$('.cat').forEach(x=>x.classList.toggle('active',x.dataset.filter===state.filter));
+  bind();
+}
+
+/* bind cards */
+function bind(){
+  $$('.card').forEach(c=>c.onclick=e=>{if(e.target.dataset.heart){toggle(e.target.dataset.heart);return}openR(recipes.find(r=>r.id===c.dataset.id))});
+  $$('[data-heart]').forEach(b=>b.onclick=e=>{e.stopPropagation();toggle(b.dataset.heart)});
+}
+
+/* favorites */
+function toggle(id){
+  let added=!fav.includes(id);
+  fav=fav.includes(id)?fav.filter(x=>x!==id):[...fav,id];
+  localStorage.jeffFavs=JSON.stringify(fav);render();
+  if(added){let btn=document.querySelector(`[data-heart="${id}"]`);if(btn){btn.classList.remove('pop');void btn.offsetWidth;btn.classList.add('pop')}}
+}
 function exportFav(){if(!fav.length){alert('Aucun favori à sauvegarder.');return}let code=fav.join(',');navigator.clipboard?.writeText(code).then(()=>alert('Code copié ! Colle-le dans tes Notes iPhone 📋')).catch(()=>{$('#restoreInput').value=code})}
-function importFav(){let ids=$('#restoreInput').value.split(',').map(x=>x.trim()).filter(Boolean);if(!ids.length){alert('Colle un code de restauration dans le champ.');return}let added=ids.filter(id=>!fav.includes(id));fav=[...new Set([...fav,...ids])];localStorage.jeffFavs=JSON.stringify(fav);$('#restoreInput').value='';render();alert(added.length?`${added.length} favori(s) restauré(s) ✓`:'Ces favoris étaient déjà dans ta liste.')}$$('.cat').forEach(b=>b.onclick=()=>{state.filter=state.filter===b.dataset.filter?'all':b.dataset.filter;render();setTimeout(()=>$('#resultsSection').scrollIntoView({behavior:'smooth',block:'start'}),80)});function doSearch(){state.q=$('#q').value;render()}
-$('#q').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();doSearch()}}
-$('#searchBtn').onclick=doSearch;$('#gen').onclick=()=>{let ids=['fTitle','fCat','fSec','fStatus','fKcal','fProt','fCarb','fFat','fImg','fIngr','fSteps','fNote'];let vals=ids.map(id=>$('#'+id).value.replace(/\n/g,' || ').replace(/\t/g,' ').trim());let line=[slug(vals[0]),...vals].join('\t');$('#out').hidden=false;$('#out').textContent=line;navigator.clipboard?.writeText(line)};if(navigator.storage?.persist)navigator.storage.persist();
-if(fav.length){$$('.tab,.panel').forEach(x=>x.classList.remove('active'));$('[data-go="fav"]').classList.add('active');$('#fav').classList.add('active')}
-render();loadSheet();
+function importFav(){let ids=$('#restoreInput').value.split(',').map(x=>x.trim()).filter(Boolean);if(!ids.length){alert('Colle un code de restauration dans le champ.');return}let added=ids.filter(id=>!fav.includes(id));fav=[...new Set([...fav,...ids])];localStorage.jeffFavs=JSON.stringify(fav);$('#restoreInput').value='';render();alert(added.length?`${added.length} favori(s) restauré(s) ✓`:'Ces favoris étaient déjà dans ta liste.')}
+
+/* detail modal */
+function openR(r){
+  if(!r)return;
+  let ratio=r.kcal&&r.protein?Math.round(r.protein*4/r.kcal*100):null;
+  let hm=r.kcal!=null||r.protein!=null||r.carbs!=null||r.fat!=null;
+  let macroHtml=hm?`<div class="macros"><div class="macro"><b>${fmt(r.kcal)}</b><small>kcal</small></div><div class="macro"><b>${fmt(r.protein)}</b><small>prot</small></div><div class="macro"><b>${fmt(r.carbs)}</b><small>gluc</small></div><div class="macro"><b>${fmt(r.fat)}</b><small>lip</small></div>${ratio!=null?`<div class="macro" style="background:#edf3e8;color:#52623e"><b>${ratio}%</b><small>prot/cal</small></div>`:''}</div>`:'';
+  let bg=CAT_GRADIENT[r.category]||'linear-gradient(135deg,#e8dcc8,#fff7e9)';
+  $('#detail').innerHTML=`<div class="sheet"><div class="sheet-handle"></div><div class="heroimg" style="background:${bg}"><img src="${esc(r.image||'')}" onerror="this.style.display='none'"><button class="close" onclick="$('#detail').classList.remove('show')">✕</button></div><div class="sheet-body">${badge(r.status)}<h2>${esc(r.title)}</h2>${macroHtml}<div class="cols"><div class="box"><h3>Ingrédients</h3><ul>${(r.ingredients||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div><div class="box"><h3>Préparation</h3><ol>${(r.steps||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div></div><div class="box"><h3>Avis diète</h3><p>${esc(r.note||'')}</p></div><button class="cta" onclick="toggle('${esc(r.id)}')">${fav.includes(r.id)?'Retirer des favoris':'Ajouter aux favoris'}</button></div></div>`;
+  $('#detail').classList.add('show');
+}
 $('#detail').onclick=e=>{if(e.target===$('#detail'))$('#detail').classList.remove('show')};
-let _sy=0;document.addEventListener('touchstart',e=>{if($('#detail').classList.contains('show'))_sy=e.touches[0].clientY},{passive:true});document.addEventListener('touchend',e=>{if($('#detail').classList.contains('show')&&e.changedTouches[0].clientY-_sy>80)$('#detail').classList.remove('show')},{passive:true});
-$$('.voir-tout').forEach(b=>b.onclick=()=>{$$('.tab,.panel').forEach(x=>x.classList.remove('active'));$('[data-go="'+b.dataset.go+'"]').classList.add('active');$('#'+b.dataset.go).classList.add('active');scrollTo(0,0)});
+
+/* csv parsing */
+function parseCSV(t){let rows=[],r=[],c='',q=false;for(let i=0;i<t.length;i++){let ch=t[i],nx=t[i+1];if(ch==='"'){if(q&&nx==='"'){c+='"';i++}else q=!q}else if(ch===','&&!q){r.push(c);c=''}else if((ch==='\n'||ch==='\r')&&!q){if(ch==='\r'&&nx==='\n')i++;r.push(c);if(r.some(x=>x.trim()))rows.push(r);r=[];c=''}else c+=ch}r.push(c);if(r.some(x=>x.trim()))rows.push(r);return rows}
+function objs(t){let rows=parseCSV(t);if(rows.length<2)return[];let h=rows[0].map(x=>x.trim());return rows.slice(1).map(r=>Object.fromEntries(h.map((k,i)=>[k,(r[i]||'').trim()])))}
+function norm(o){let title=o.title||o.titre||o.Titre||'',id=o.id||slug(title);if(!title||!id)return null;return{id,title,category:canonCat(o.category||o.categorie),section:canonSection(o.section),status:o.status||'À tester',kcal:num(o.kcal),protein:num(o.protein||o.proteines),carbs:num(o.carbs||o.glucides),fat:num(o.fat||o.lipides),image:o.image||`images/${id}.jpg`,ingredients:split(o.ingredients||o['ingrédients']),steps:split(o.steps||o.preparation||o['préparation']),note:o.note||''}}
+
+/* load sheet */
+async function loadSheet(){
+  try{
+    let res=await fetch(SHEET_CSV_URL+'&t='+Date.now(),{cache:'no-store'});
+    if(!res.ok)throw new Error(res.status);
+    let txt=await res.text();
+    if(txt.trim().startsWith('<'))throw new Error('html');
+    let imp=objs(txt).map(norm).filter(Boolean);
+    if(imp.length){recipes=imp;let s=$('#dataStatus');s.textContent=`✓ Google Sheets · ${imp.length} recette${imp.length>1?'s':''}`;s.classList.remove('visible','error')}
+    else{$('#dataStatus').textContent='Google Sheets connecté, aucune recette lue';$('#dataStatus').classList.add('visible')}
+  }catch(e){
+    console.warn(e);recipes=[...fallbackRecipes];
+    let s=$('#dataStatus');s.textContent='⚠ Base locale · Google Sheets non accessible';s.classList.add('visible','error');
+  }
+  render();
+}
+
+/* tab navigation */
+$$('[data-go]').forEach(b=>b.onclick=()=>{
+  $$('.tab,.panel').forEach(x=>x.classList.remove('active'));
+  let tab=$(`.tab[data-go="${b.dataset.go}"]`);
+  if(tab)tab.classList.add('active');
+  $(`#${b.dataset.go}`).classList.add('active');
+  scrollTo(0,0);
+  if(b.dataset.go==='add')goWizardStep(0);
+});
+
+/* search */
+function doSearch(){state.q=$('#q').value;render()}
+$('#q').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();doSearch()}}
+$('#searchBtn').onclick=doSearch;
+
+/* category filter */
+$$('.cat').forEach(b=>b.onclick=()=>{state.filter=state.filter===b.dataset.filter?'all':b.dataset.filter;render();setTimeout(()=>$('#resultsSection').scrollIntoView({behavior:'smooth',block:'start'}),80)});
+
+/* dark mode */
+(function(){
+  let saved=localStorage.jeffTheme;
+  let prefersDark=window.matchMedia('(prefers-color-scheme: dark)').matches;
+  let theme=saved||(prefersDark?'dark':'light');
+  document.documentElement.dataset.theme=theme;
+  $('#themeToggle').textContent=theme==='dark'?'☀':'🌙';
+})();
+$('#themeToggle').onclick=()=>{
+  let next=document.documentElement.dataset.theme==='dark'?'light':'dark';
+  document.documentElement.dataset.theme=next;
+  localStorage.jeffTheme=next;
+  $('#themeToggle').textContent=next==='dark'?'☀':'🌙';
+};
+
+/* wizard */
+const WIZARD_STEPS=['wStep0','wStep1','wStep2'];
+const STEP_NAMES=['Informations de base','Image & Macros (optionnel)','Ingrédients & Préparation'];
+let wizardStep=0;
+function goWizardStep(n){
+  $$('.wizard-page').forEach(p=>p.classList.remove('active'));
+  $(`#${WIZARD_STEPS[n]}`).classList.add('active');
+  [0,1,2].forEach(i=>{
+    let dot=$(`#wDot${i}`);dot.classList.remove('active','done');
+    if(i===n)dot.classList.add('active');
+    else if(i<n){dot.classList.add('done');dot.textContent='✓'}
+    else dot.textContent=String(i+1);
+  });
+  $('#stepNum').textContent=n+1;
+  $('#stepName').textContent=STEP_NAMES[n];
+  $('#wBack').hidden=n===0;
+  $('#wNext').hidden=n===WIZARD_STEPS.length-1;
+  $('#wSkip').hidden=n!==1;
+  $('#gen').hidden=n!==WIZARD_STEPS.length-1;
+  if(n===1)updateLivePreview();
+  wizardStep=n;
+}
+$('#wNext').onclick=()=>{if(wizardStep<WIZARD_STEPS.length-1)goWizardStep(wizardStep+1)};
+$('#wBack').onclick=()=>{if(wizardStep>0)goWizardStep(wizardStep-1)};
+$('#wSkip').onclick=()=>goWizardStep(2);
+
+function updateLivePreview(){
+  let r={id:slug($('#fTitle').value),title:$('#fTitle').value||'Titre de la recette',category:$('#fCat').value,status:$('#fStatus').value,kcal:num($('#fKcal').value),protein:num($('#fProt').value),carbs:num($('#fCarb').value),fat:num($('#fFat').value),image:$('#fImg').value||'',ingredients:[],steps:[],note:''};
+  $('#livePreview').innerHTML=card(r);
+}
+['fKcal','fProt','fCarb','fFat'].forEach(id=>$('#'+id).oninput=updateLivePreview);
+
+$('#fImgFile').onchange=function(){
+  let file=this.files[0];if(!file)return;
+  let url=URL.createObjectURL(file);
+  let prev=$('#fImgPreview');prev.src=url;prev.style.display='block';
+  let ext=file.name.split('.').pop().toLowerCase()||'jpg';
+  let ts=slug($('#fTitle').value)||slug(file.name.replace(/\.[^.]+$/,''));
+  $('#fImg').value=`images/${ts}.${ext}`;
+  updateLivePreview();
+};
+
+goWizardStep(0);
+
+/* generate google sheets row */
+$('#gen').onclick=()=>{
+  let vals=[$('#fTitle').value,$('#fCat').value,$('#fSec').value,$('#fStatus').value,$('#fKcal').value,$('#fProt').value,$('#fCarb').value,$('#fFat').value,$('#fImg').value||`images/${slug($('#fTitle').value)}.jpg`,$('#fIngr').value,$('#fSteps').value,$('#fNote').value].map(v=>v.replace(/\n/g,' || ').replace(/\t/g,' ').trim());
+  let line=[slug(vals[0]),...vals].join('\t');
+  $('#out').hidden=false;$('#out').textContent=line;navigator.clipboard?.writeText(line);
+};
+
+/* storage */
+if(navigator.storage?.persist)navigator.storage.persist();
+
+/* init: skeletons then load */
+renderSkeletons('#creamiGrid',3);renderSkeletons('#validGrid',3);renderSkeletons('#pleasureGrid',3);renderSkeletons('#allGrid',6);
+if(fav.length){$$('.tab,.panel').forEach(x=>x.classList.remove('active'));$('[data-go="fav"]').classList.add('active');$('#fav').classList.add('active')}
+loadSheet();
+
+/* swipe to close detail */
+let _sy=0;
+document.addEventListener('touchstart',e=>{if($('#detail').classList.contains('show'))_sy=e.touches[0].clientY},{passive:true});
+document.addEventListener('touchend',e=>{if($('#detail').classList.contains('show')&&e.changedTouches[0].clientY-_sy>80)$('#detail').classList.remove('show')},{passive:true});
 </script>
 </body>
 </html>

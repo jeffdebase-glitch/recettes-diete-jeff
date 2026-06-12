@@ -498,7 +498,7 @@ function badge(s){s=s||'À tester';let c=s.includes('sèche')?'dry':s.includes('
 function photo(r){
   let bg=CAT_GRADIENT[r.category]||'linear-gradient(135deg,#e8dcc8,#fff7e9)';
   let emoji=CAT_EMOJI[r.category]||'🍴';
-  return`<div class="photo" style="background:${bg}"><img src="${esc(r.image||'')}" onerror="this.style.display='none'"><div class="ph"><span class="ph-emoji">${emoji}</span><span class="ph-title">${esc(r.title)}</span></div><button class="heart" data-heart="${esc(r.id)}">${fav.includes(r.id)?'♥':'♡'}</button></div>`
+  return`<div class="photo" style="background:${bg}"><img src="${esc(r.image||'')}" onload="this.parentNode.querySelector('.ph').style.display='none'" onerror="this.style.display='none'"><div class="ph"><span class="ph-emoji">${emoji}</span><span class="ph-title">${esc(r.title)}</span></div><button class="heart" data-heart="${esc(r.id)}">${fav.includes(r.id)?'♥':'♡'}</button></div>`
 }
 function card(r){
   let hm=r.kcal!=null||r.protein!=null||r.carbs!=null||r.fat!=null;

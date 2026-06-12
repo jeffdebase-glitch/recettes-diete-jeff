@@ -297,17 +297,17 @@ li { margin:8px 0; line-height:1.45; }
   </div>
   <section class="section curated">
     <div class="section-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
-      <div><h2>Mes Creami</h2><p>Les recettes à retrouver vite.</p></div>
-      <button class="voir-tout" data-go="creami">Voir tout</button>
-    </div>
-    <div class="grid" id="creamiGrid"></div>
-  </section>
-  <section class="section curated">
-    <div class="section-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
       <div><h2>Recettes validées</h2><p>Celles qui peuvent revenir sans stress.</p></div>
       <button class="voir-tout" data-go="recipes">Voir tout</button>
     </div>
     <div class="grid" id="validGrid"></div>
+  </section>
+  <section class="section curated" id="favHomeSection">
+    <div class="section-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+      <div><h2>Favoris</h2><p>Tes recettes gardées sous la main.</p></div>
+      <button class="voir-tout" data-go="fav">Voir tout</button>
+    </div>
+    <div class="grid" id="favHomeGrid"></div>
   </section>
   <section class="section curated">
     <div class="section-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
@@ -315,6 +315,13 @@ li { margin:8px 0; line-height:1.45; }
       <button class="voir-tout" data-go="recipes">Voir tout</button>
     </div>
     <div class="grid" id="pleasureGrid"></div>
+  </section>
+  <section class="section curated">
+    <div class="section-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+      <div><h2>Toutes les Creami</h2><p>Tout ton univers Creami.</p></div>
+      <button class="voir-tout" data-go="creami">Voir tout</button>
+    </div>
+    <div class="grid" id="creamiGrid"></div>
   </section>
   <section class="section" id="resultsSection">
     <div class="section-head">
@@ -510,9 +517,13 @@ function fill(id,list,emptyMsg){$(id).innerHTML=list.length?list.map(card).join(
 function render(){
   let f=recipes.filter(match),cur=state.filter==='all'&&!state.q;
   $$('.curated').forEach(s=>s.classList.toggle('hidden',!cur));
-  fill('#creamiGrid',recipes.filter(r=>r.section==='Mes Creami').slice(0,3));
   fill('#validGrid',recipes.filter(r=>r.section==='Recettes validées').slice(0,3));
+  let favList=recipes.filter(r=>fav.includes(r.id));
+  fill('#favHomeGrid',favList.slice(0,3));
+  if(cur)$('#favHomeSection').classList.toggle('hidden',!favList.length);
   fill('#pleasureGrid',recipes.filter(r=>r.section==='Plaisirs contrôlés').slice(0,3));
+  fill('#creamiGrid',recipes.filter(r=>r.category==='Glaces Creami'));
+  $('#resultsSection').classList.toggle('hidden',cur);
   fill('#allGrid',f);
   fill('#creamiPage',recipes.filter(r=>r.category==='Glaces Creami'));
   fill('#recipesPage',recipes.filter(r=>r.category!=='Glaces Creami'));
@@ -546,10 +557,28 @@ function openR(r){
   let hm=r.kcal!=null||r.protein!=null||r.carbs!=null||r.fat!=null;
   let macroHtml=hm?`<div class="macros"><div class="macro"><b>${fmt(r.kcal)}</b><small>kcal</small></div><div class="macro"><b>${fmt(r.protein)}</b><small>prot</small></div><div class="macro"><b>${fmt(r.carbs)}</b><small>gluc</small></div><div class="macro"><b>${fmt(r.fat)}</b><small>lip</small></div>${ratio!=null?`<div class="macro" style="background:#edf3e8;color:#52623e"><b>${ratio}%</b><small>prot/cal</small></div>`:''}</div>`:'';
   let bg=CAT_GRADIENT[r.category]||'linear-gradient(135deg,#e8dcc8,#fff7e9)';
-  $('#detail').innerHTML=`<div class="sheet"><div class="sheet-handle"></div><div class="heroimg" style="background:${bg}"><img src="${esc(r.image||'')}" onerror="this.style.display='none'"><button class="close" onclick="$('#detail').classList.remove('show')">✕</button></div><div class="sheet-body">${badge(r.status)}<h2>${esc(r.title)}</h2>${macroHtml}<div class="cols"><div class="box"><h3>Ingrédients</h3><ul>${(r.ingredients||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div><div class="box"><h3>Préparation</h3><ol>${(r.steps||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div></div><div class="box"><h3>Avis diète</h3><p>${esc(r.note||'')}</p></div><button class="cta" onclick="toggle('${esc(r.id)}')">${fav.includes(r.id)?'Retirer des favoris':'Ajouter aux favoris'}</button></div></div>`;
+  $('#detail').innerHTML=`<div class="sheet"><div class="sheet-handle"></div><div class="heroimg" style="background:${bg}"><img src="${esc(r.image||'')}" onerror="this.style.display='none'"><button class="close" onclick="closeDetail()">✕</button></div><div class="sheet-body">${badge(r.status)}<h2>${esc(r.title)}</h2>${macroHtml}<div class="cols"><div class="box"><h3>Ingrédients</h3><ul>${(r.ingredients||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div><div class="box"><h3>Préparation</h3><ol>${(r.steps||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div></div><div class="box"><h3>Avis diète</h3><p>${esc(r.note||'')}</p></div><div style="display:flex;gap:8px"><button class="cta" style="flex:1" onclick="shareR('${esc(r.id)}')">📤 Partager</button><button class="cta" style="flex:1" onclick="toggle('${esc(r.id)}')">${fav.includes(r.id)?'Retirer des favoris':'Ajouter aux favoris'}</button></div></div></div>`;
   $('#detail').classList.add('show');
+  let h='#r/'+encodeURIComponent(r.id);
+  if(location.hash!==h)history.pushState(null,'',h);
 }
-$('#detail').onclick=e=>{if(e.target===$('#detail'))$('#detail').classList.remove('show')};
+function closeDetail(){
+  $('#detail').classList.remove('show');
+  if(location.hash.startsWith('#r/'))history.pushState(null,'',location.pathname+location.search);
+}
+function shareR(id){
+  let r=recipes.find(x=>x.id===id);
+  let url=location.origin+location.pathname+'#r/'+encodeURIComponent(id);
+  if(navigator.share){navigator.share({title:r?r.title:'Recette',text:r?r.title:'',url}).catch(()=>{})}
+  else{navigator.clipboard?.writeText(url);alert('Lien copié !')}
+}
+function openFromHash(){
+  let m=location.hash.match(/^#r\/(.+)$/);
+  if(m){let r=recipes.find(x=>x.id===decodeURIComponent(m[1]));if(r)openR(r)}
+  else $('#detail').classList.remove('show');
+}
+window.addEventListener('popstate',openFromHash);
+$('#detail').onclick=e=>{if(e.target===$('#detail'))closeDetail()};
 
 /* csv parsing */
 function parseCSV(t){let rows=[],r=[],c='',q=false;for(let i=0;i<t.length;i++){let ch=t[i],nx=t[i+1];if(ch==='"'){if(q&&nx==='"'){c+='"';i++}else q=!q}else if(ch===','&&!q){r.push(c);c=''}else if((ch==='\n'||ch==='\r')&&!q){if(ch==='\r'&&nx==='\n')i++;r.push(c);if(r.some(x=>x.trim()))rows.push(r);r=[];c=''}else c+=ch}r.push(c);if(r.some(x=>x.trim()))rows.push(r);return rows}
@@ -571,6 +600,7 @@ async function loadSheet(){
     let s=$('#dataStatus');s.textContent='⚠ Base locale · Google Sheets non accessible';s.classList.add('visible','error');
   }
   render();
+  openFromHash();
 }
 
 /* tab navigation */
@@ -662,13 +692,12 @@ if(navigator.storage?.persist)navigator.storage.persist();
 
 /* init: skeletons then load */
 renderSkeletons('#creamiGrid',3);renderSkeletons('#validGrid',3);renderSkeletons('#pleasureGrid',3);renderSkeletons('#allGrid',6);
-if(fav.length){$$('.tab,.panel').forEach(x=>x.classList.remove('active'));$('[data-go="fav"]').classList.add('active');$('#fav').classList.add('active')}
 loadSheet();
 
 /* swipe to close detail */
 let _sy=0;
 document.addEventListener('touchstart',e=>{if($('#detail').classList.contains('show'))_sy=e.touches[0].clientY},{passive:true});
-document.addEventListener('touchend',e=>{if($('#detail').classList.contains('show')&&e.changedTouches[0].clientY-_sy>80)$('#detail').classList.remove('show')},{passive:true});
+document.addEventListener('touchend',e=>{if($('#detail').classList.contains('show')&&e.changedTouches[0].clientY-_sy>80)closeDetail()},{passive:true});
 </script>
 </body>
 </html>

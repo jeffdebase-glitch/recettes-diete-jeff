@@ -321,6 +321,7 @@ li { margin:8px 0; line-height:1.45; }
       <div><h2>Toutes les Creami</h2><p>Tout ton univers Creami.</p></div>
       <button class="voir-tout" data-go="creami">Voir tout</button>
     </div>
+    <button class="voir-tout fpfToggle" onclick="toggleFPF()" style="margin-bottom:10px"></button>
     <div class="grid" id="creamiGrid"></div>
   </section>
   <section class="section" id="resultsSection">
@@ -335,6 +336,7 @@ li { margin:8px 0; line-height:1.45; }
 <main id="creami" class="panel">
   <section class="section">
     <h2>Glaces Creami</h2><p>Tout ton univers Creami.</p>
+    <button class="voir-tout fpfToggle" onclick="toggleFPF()" style="margin-bottom:10px"></button>
     <div class="grid" id="creamiPage"></div>
   </section>
 </main>
@@ -474,7 +476,7 @@ const fallbackRecipes=[
 let recipes=[...fallbackRecipes];
 const $=s=>document.querySelector(s);
 const $$=s=>[...document.querySelectorAll(s)];
-let state={filter:'all',q:''};
+let state={filter:'all',q:'',showFPF:localStorage.jeffShowFPF==='1'};
 let fav=JSON.parse(localStorage.jeffFavs||'[]');
 
 const CAT_GRADIENT={
@@ -515,18 +517,21 @@ function renderSkeletons(id,n){$(id).innerHTML=Array(n).fill(skeletonCard()).joi
 function match(r){return(state.filter==='all'||r.category===state.filter)&&(!state.q||[r.title,...(r.ingredients||[]),r.note||''].join(' ').toLowerCase().includes(state.q.toLowerCase()))}
 function fill(id,list,emptyMsg){$(id).innerHTML=list.length?list.map(card).join(''):`<div class="empty">${emptyMsg||'Aucune recette dans cette catégorie pour le moment.'}</div>`}
 function render(){
-  let f=recipes.filter(match),cur=state.filter==='all'&&!state.q;
+  let vis=state.showFPF?recipes:recipes.filter(r=>!r.isFPF);
+  let nFPF=recipes.filter(r=>r.isFPF).length;
+  let f=vis.filter(match),cur=state.filter==='all'&&!state.q;
   $$('.curated').forEach(s=>s.classList.toggle('hidden',!cur));
-  fill('#validGrid',recipes.filter(r=>r.section==='Recettes validées').slice(0,3));
+  fill('#validGrid',vis.filter(r=>r.section==='Recettes validées').slice(0,3));
   let favList=recipes.filter(r=>fav.includes(r.id));
   fill('#favHomeGrid',favList.slice(0,3));
   if(cur)$('#favHomeSection').classList.toggle('hidden',!favList.length);
-  fill('#pleasureGrid',recipes.filter(r=>r.section==='Plaisirs contrôlés').slice(0,3));
-  fill('#creamiGrid',recipes.filter(r=>r.category==='Glaces Creami'));
+  fill('#pleasureGrid',vis.filter(r=>r.section==='Plaisirs contrôlés').slice(0,3));
+  fill('#creamiGrid',vis.filter(r=>r.category==='Glaces Creami'));
   $('#resultsSection').classList.toggle('hidden',cur);
   fill('#allGrid',f);
-  fill('#creamiPage',recipes.filter(r=>r.category==='Glaces Creami'));
-  fill('#recipesPage',recipes.filter(r=>r.category!=='Glaces Creami'));
+  fill('#creamiPage',vis.filter(r=>r.category==='Glaces Creami'));
+  fill('#recipesPage',vis.filter(r=>r.category!=='Glaces Creami'));
+  $$('.fpfToggle').forEach(b=>{b.textContent=state.showFPF?`Masquer les recettes FPF (${nFPF})`:`Afficher les recettes FPF (${nFPF})`;b.classList.toggle('hidden',!nFPF)});
   fill('#favGrid',recipes.filter(r=>fav.includes(r.id)),'Appuie sur ♥ dans une recette pour la retrouver ici 💛');
   $('#resultsTitle').textContent=state.filter==='all'?(state.q?'Résultats':'Toutes les recettes'):state.filter;
   $('#count').textContent=`${f.length} recette${f.length>1?'s':''}`;
@@ -534,6 +539,7 @@ function render(){
   bind();
 }
 
+function toggleFPF(){state.showFPF=!state.showFPF;localStorage.jeffShowFPF=state.showFPF?'1':'0';render()}
 /* bind cards */
 function bind(){
   $$('.card').forEach(c=>c.onclick=e=>{if(e.target.dataset.heart){toggle(e.target.dataset.heart);return}openR(recipes.find(r=>r.id===c.dataset.id))});
@@ -583,7 +589,7 @@ $('#detail').onclick=e=>{if(e.target===$('#detail'))closeDetail()};
 /* csv parsing */
 function parseCSV(t){let rows=[],r=[],c='',q=false;for(let i=0;i<t.length;i++){let ch=t[i],nx=t[i+1];if(ch==='"'){if(q&&nx==='"'){c+='"';i++}else q=!q}else if(ch===','&&!q){r.push(c);c=''}else if((ch==='\n'||ch==='\r')&&!q){if(ch==='\r'&&nx==='\n')i++;r.push(c);if(r.some(x=>x.trim()))rows.push(r);r=[];c=''}else c+=ch}r.push(c);if(r.some(x=>x.trim()))rows.push(r);return rows}
 function objs(t){let rows=parseCSV(t);if(rows.length<2)return[];let h=rows[0].map(x=>x.trim());return rows.slice(1).map(r=>Object.fromEntries(h.map((k,i)=>[k,(r[i]||'').trim()])))}
-function norm(o){let title=o.title||o.titre||o.Titre||'',id=o.id||slug(title);if(!title||!id)return null;return{id,title,category:canonCat(o.category||o.categorie),section:canonSection(o.section),status:o.status||'À tester',kcal:num(o.kcal),protein:num(o.protein||o.proteines),carbs:num(o.carbs||o.glucides),fat:num(o.fat||o.lipides),image:o.image||`images/${id}.jpg`,ingredients:split(o.ingredients||o['ingrédients']),steps:split(o.steps||o.preparation||o['préparation']),note:o.note||''}}
+function norm(o){let title=o.title||o.titre||o.Titre||'',id=o.id||slug(title);if(!title||!id)return null;return{id,title,category:canonCat(o.category||o.categorie),section:canonSection(o.section),status:o.status||'À tester',kcal:num(o.kcal),protein:num(o.protein||o.proteines),carbs:num(o.carbs||o.glucides),fat:num(o.fat||o.lipides),image:o.image||`images/${id}.jpg`,ingredients:split(o.ingredients||o['ingrédients']),steps:split(o.steps||o.preparation||o['préparation']),note:o.note||'',isFPF:(String(o.source||'').toLowerCase().trim()==='fpf')||/creami cravings/i.test(o.note||'')}}
 
 /* load sheet */
 async function loadSheet(){

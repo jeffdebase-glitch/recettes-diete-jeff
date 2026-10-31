@@ -1,0 +1,40 @@
+name: Import brownie cottage image
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/import-brownie-cottage.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  import-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Download and validate JPEG
+        run: |
+          set -euo pipefail
+          mkdir -p images
+          curl -fL 'https://d2ol7oe51mr4n9.cloudfront.net/user_3C70PMlkvaFXnlC5SPncI5QTMXI/357cf421-e4ee-4a48-a270-634e06772806.jpg' -o images/brownie-fondant-cottage-cheese.jpg
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('images/brownie-fondant-cottage-cheese.jpg')
+          data=p.read_bytes()
+          assert data[:2] == b'\xff\xd8' and data[-2:] == b'\xff\xd9', 'Not a valid JPEG'
+          assert 50_000 < len(data) < 300_000, f'Unexpected JPEG size: {len(data)}'
+          print(f'JPEG OK: {len(data)} bytes')
+          PY
+      - name: Commit image and remove temporary workflow
+        run: |
+          set -euo pipefail
+          rm .github/workflows/import-brownie-cottage.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add images/brownie-fondant-cottage-cheese.jpg .github/workflows/import-brownie-cottage.yml
+          git commit -m 'feat: ajoute photo brownie fondant cottage cheese'
+          git push origin main

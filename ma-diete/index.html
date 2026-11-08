@@ -30,6 +30,41 @@
 .qtyunit{white-space:nowrap}
 @media(max-width:375px){.meal-head{gap:7px}.meal-icon{width:39px;height:39px}.meal-nutri{gap:3px 4px}.meal-nutri span{padding:1px 3px;font-size:10px}.meal-name{font-size:15px}}
 
+
+/* V3 — lisibilité améliorée, sans refonte du positionnement */
+body{font-size:16px}
+.small{font-size:13px}
+.tiny{font-size:12px}
+.eyebrow{font-size:12px}
+.summary .label{font-size:13px}
+.summary .value{font-size:25px}
+.macro-row b{font-size:14px}
+.nav-item{font-size:12px}
+.section-head h2{font-size:20px}
+.meal-name{font-size:18px;line-height:1.25;margin-bottom:5px}
+.meal-title-toggle{appearance:none;border:0;background:transparent;color:inherit;text-align:left;padding:0;display:block;width:fit-content;max-width:100%;cursor:pointer;touch-action:manipulation}
+.meal-title-toggle:focus-visible{outline:3px solid #70af90;outline-offset:3px;border-radius:4px}
+.meal-nutri{gap:5px 6px}
+.meal-nutri .meal-kcal{font-size:14px}
+.meal-nutri span{font-size:12px;padding:2px 5px}
+.meal-desc{font-size:13.5px;line-height:1.35}
+.foodname strong{font-size:14px}
+.foodname span{font-size:12px}
+.qtyinput{font-size:15px}
+.qtyunit{font-size:11px}
+.chip{font-size:13px}
+.note{font-size:13px}
+.field label{font-size:13px}
+.field input,.field select,.field textarea{font-size:16px}
+.sheet-title{font-size:22px}
+.btn.smallbtn{font-size:13px}
+@media(max-width:375px){
+ .meal-name{font-size:17px}
+ .meal-nutri span{font-size:11px;padding:1px 3px}
+ .meal-desc{font-size:13px}
+ .meal-head{gap:7px}
+ .meal-icon{width:39px;height:39px}
+}
 </style>
 </head>
 <body>
@@ -41,5 +76,5 @@
 <button class="nav-item" data-tab="settings"><span class="icon">⚙</span>Réglages</button>
 </nav></div>
 <div id="modal-root"></div><div id="toast-root"></div>
-<script src="./app.js?v=2" defer></script>
+<script src="./app.js?v=3" defer></script>
 </body></html>

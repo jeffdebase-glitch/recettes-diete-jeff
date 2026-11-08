@@ -1,6 +1,6 @@
-/* Ma Diète V2 — mise à jour et consultation hors connexion */
-const CACHE='ma-diete-v2-20261108';
-const FILES=['./','./index.html','./app.js?v=2','./manifest.webmanifest','./icon.svg'];
+/* Ma Diète V3 — mise à jour et consultation hors connexion */
+const CACHE='ma-diete-v3-20261108';
+const FILES=['./','./index.html','./app.js?v=3','./manifest.webmanifest','./icon.svg'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)));
   self.skipWaiting();
